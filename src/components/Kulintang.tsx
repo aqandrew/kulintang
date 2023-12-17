@@ -1,15 +1,20 @@
 import useKeyboardBindings from '../hooks/useKeyboardBindings';
 import './Kulintang.css';
 
+// Pelog scale for gamelan
+// https://www.youtube.com/watch?si=F7sb2W6o500chwRT&t=114&v=FAi4RSDv4ig&feature=youtu.be
 const TONES = ['Bb', 'B', 'Db', 'E', 'F', 'Gb', 'Ab', 'Bb'];
+
+function playSound(tone: string, index: number) {
+	console.log(`TODO play ${tone}${index}`);
+}
 
 export default function Kulintang() {
 	useKeyboardBindings(
 		TONES.reduce(
-			(map, tone, index) => ({
-				...map,
-				// TODO play sound
-				[index + 1]: () => console.log(`you pressed ${tone}`),
+			(keyMap, tone, i) => ({
+				...keyMap,
+				[i + 1]: () => playSound(tone, i),
 			}),
 			{}
 		)
@@ -18,7 +23,9 @@ export default function Kulintang() {
 	return (
 		<div className="Kulintang">
 			{TONES.map((tone, i) => (
-				<button key={i}>{tone}</button>
+				<button onClick={() => playSound(tone, i)} key={i}>
+					{tone}
+				</button>
 			))}
 		</div>
 	);
