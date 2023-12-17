@@ -1,4 +1,5 @@
 import useKeyboardBindings from '../hooks/useKeyboardBindings';
+import './Kulintang.css';
 
 const TONES = ['Bb', 'B', 'Db', 'E', 'F', 'Gb', 'Ab', 'Bb'];
 
@@ -15,11 +16,10 @@ export default function Kulintang() {
 	);
 
 	return (
-		// TODO style buttons to be bigger
-		<>
+		<div className="Kulintang">
 			{TONES.map((tone, i) => (
 				<button key={i}>{tone}</button>
 			))}
-		</>
+		</div>
 	);
 }

@@ -1,0 +1,7 @@
+.Kulintang {
+	display: flex;
+
+	> button {
+		flex: 1;
+	}
+}
