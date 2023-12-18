@@ -25,19 +25,6 @@ export default function Kulintang() {
 	const gongsRef = useRef<(HTMLElement | null)[]>([]);
 	let playSound: (frequency: number) => void;
 
-	// trigger click events for keys 1-8
-	useKeyboardBindings(
-		TONES.reduce(
-			(keyMap, _, i) => ({
-				...keyMap,
-				[i + 1]: () => {
-					gongsRef.current[i]?.click();
-				},
-			}),
-			{}
-		)
-	);
-
 	// audio logic wrapped in useEffect so that we can call audio.close() during cleanup/dismount
 	useEffect(() => {
 		const audio = new AudioContext();
@@ -64,6 +51,23 @@ export default function Kulintang() {
 			audio.close();
 		};
 	}, []);
+
+	// trigger click events for keys 1-8
+	useKeyboardBindings({
+		map: TONES.reduce(
+			(keyMap, _, i) => ({
+				...keyMap,
+				[i + 1]: () => {
+					gongsRef.current[i]?.click();
+				},
+			}),
+			{}
+		),
+		handleRelease: () => {
+			// TODO also handleRelease on mouseup
+			console.log('TODO handle release');
+		},
+	});
 
 	return (
 		<div className="Kulintang">

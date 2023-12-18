@@ -2,11 +2,15 @@
 
 import { useEffect } from 'react';
 
-type Props = {
-	[key: string]: () => void;
+type UseKeyboardBindingsArgs = {
+	map: { [key: string]: () => void };
+	handleRelease: () => void;
 };
 
-export default function useKeyboardBindings(map: Props) {
+export default function useKeyboardBindings({
+	map,
+	handleRelease,
+}: UseKeyboardBindingsArgs) {
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			const handler = map[event.key];
@@ -17,9 +21,11 @@ export default function useKeyboardBindings(map: Props) {
 		};
 
 		window.addEventListener('keydown', handleKeyDown);
+		window.addEventListener('keyup', handleRelease);
 
 		return () => {
 			window.removeEventListener('keydown', handleKeyDown);
+			window.removeEventListener('keyup', handleRelease);
 		};
 	}, [map]);
 }
