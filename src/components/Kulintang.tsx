@@ -52,13 +52,13 @@ export default function Kulintang() {
 		};
 	}, []);
 
-	// trigger click events for keys 1-8
+	// listen for presses on keys 1-8
 	useKeyboardBindings(
 		TONES.reduce(
-			(keyMap, _, i) => ({
+			(keyMap, { frequency }, i) => ({
 				...keyMap,
 				[i + 1]: () => {
-					gongsRef.current[i]?.click();
+					playSoundRef.current!(frequency);
 				},
 			}),
 			{}
@@ -72,7 +72,7 @@ export default function Kulintang() {
 					ref={(element) => {
 						gongsRef.current[i] = element;
 					}}
-					onClick={() => playSoundRef.current!(frequency)}
+					onMouseDown={() => playSoundRef.current!(frequency)}
 					key={i}
 				>
 					{name}
