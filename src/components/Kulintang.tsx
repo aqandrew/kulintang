@@ -53,8 +53,8 @@ export default function Kulintang() {
 	}, []);
 
 	// trigger click events for keys 1-8
-	useKeyboardBindings({
-		map: TONES.reduce(
+	useKeyboardBindings(
+		TONES.reduce(
 			(keyMap, _, i) => ({
 				...keyMap,
 				[i + 1]: () => {
@@ -62,12 +62,8 @@ export default function Kulintang() {
 				},
 			}),
 			{}
-		),
-		handleRelease: () => {
-			// TODO also handleRelease on mouseup
-			console.log('TODO handle release');
-		},
-	});
+		)
+	);
 
 	return (
 		<div className="Kulintang">
