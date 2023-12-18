@@ -35,16 +35,13 @@ export default function Kulintang() {
 		playSoundRef.current = function (frequency: number) {
 			console.log(`playing ${frequency}`);
 
-			// TODO adjust ADSR instead of using 500ms timeout
+			// TODO adjust ADSR
 			const oscillator = audio.createOscillator();
 			oscillator.type = 'sine';
 			oscillator.connect(gainNode);
 			oscillator.frequency.value = frequency;
 			oscillator.start();
-
-			setTimeout(() => {
-				oscillator.stop();
-			}, 500);
+			oscillator.stop(audio.currentTime + 0.5);
 		};
 
 		return () => {
