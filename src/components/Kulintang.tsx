@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import useKeyboardBindings from '../hooks/useKeyboardBindings';
 import './Kulintang.css';
 
@@ -10,11 +11,15 @@ function playSound(tone: string, index: number) {
 }
 
 export default function Kulintang() {
+	const gongsRef = useRef<(HTMLElement | null)[]>([]);
+
 	useKeyboardBindings(
 		TONES.reduce(
-			(keyMap, tone, i) => ({
+			(keyMap, _, i) => ({
 				...keyMap,
-				[i + 1]: () => playSound(tone, i),
+				[i + 1]: () => {
+					gongsRef.current[i]?.click();
+				},
 			}),
 			{}
 		)
@@ -23,7 +28,13 @@ export default function Kulintang() {
 	return (
 		<div className="Kulintang">
 			{TONES.map((tone, i) => (
-				<button onClick={() => playSound(tone, i)} key={i}>
+				<button
+					ref={(element) => {
+						gongsRef.current[i] = element;
+					}}
+					onClick={() => playSound(tone, i)}
+					key={i}
+				>
 					{tone}
 				</button>
 			))}

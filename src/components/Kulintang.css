@@ -3,5 +3,7 @@
 
 	> button {
 		flex: 1;
+		height: 12rem;
+		cursor: pointer;
 	}
 }
