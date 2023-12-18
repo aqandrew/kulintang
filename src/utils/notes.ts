@@ -33,7 +33,7 @@ type Note = {
 
 // Pelog scale for gamelan
 // https://www.youtube.com/watch?si=F7sb2W6o500chwRT&t=114&v=FAi4RSDv4ig&feature=youtu.be
-export const TONES: Note[] = [-11, -10, -8, -5, -4, -3, -1, 1].map((n) => ({
+export const TONES: Note[] = [1, 2, 4, 7, 8, 9, 11, 13].map((n) => ({
 	name: getNoteName(n),
 	frequency: getFrequency(n),
 }));
