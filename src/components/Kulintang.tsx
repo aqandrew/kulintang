@@ -23,7 +23,7 @@ const TONES: Note[] = [
 
 export default function Kulintang() {
 	const gongsRef = useRef<(HTMLElement | null)[]>([]);
-	let playSound: (frequency: number) => void;
+	const playSoundRef = useRef<(frequency: number) => void>();
 
 	// audio logic wrapped in useEffect so that we can call audio.close() during cleanup/dismount
 	useEffect(() => {
@@ -32,7 +32,7 @@ export default function Kulintang() {
 		gainNode.gain.value = 0.3; // lower gain to prevent clipping
 		gainNode.connect(audio.destination);
 
-		playSound = function (frequency: number) {
+		playSoundRef.current = function (frequency: number) {
 			console.log(`playing ${frequency}`);
 
 			// TODO adjust ADSR instead of using 500ms timeout
@@ -76,7 +76,7 @@ export default function Kulintang() {
 					ref={(element) => {
 						gongsRef.current[i] = element;
 					}}
-					onClick={() => playSound(frequency)}
+					onClick={() => playSoundRef.current!(frequency)}
 					key={i}
 				>
 					{name}
