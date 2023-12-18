@@ -1,25 +1,7 @@
 import { useEffect, useRef } from 'react';
+import { TONES } from '../utils/notes';
 import useKeyboardBindings from '../hooks/useKeyboardBindings';
 import './Kulintang.css';
-
-type Note = {
-	name: string;
-	frequency: number;
-};
-
-// Pelog scale for gamelan
-// https://www.youtube.com/watch?si=F7sb2W6o500chwRT&t=114&v=FAi4RSDv4ig&feature=youtu.be
-// frequencies from https://pages.mtu.edu/~suits/notefreqs.html
-const TONES: Note[] = [
-	{ name: 'Bb', frequency: 233.08 },
-	{ name: 'B', frequency: 246.94 },
-	{ name: 'Db', frequency: 277.18 },
-	{ name: 'E', frequency: 329.63 },
-	{ name: 'F', frequency: 349.23 },
-	{ name: 'Gb', frequency: 369.99 },
-	{ name: 'Ab', frequency: 415.3 },
-	{ name: 'Bb', frequency: 466.16 },
-];
 
 export default function Kulintang() {
 	const gongsRef = useRef<(HTMLElement | null)[]>([]);
