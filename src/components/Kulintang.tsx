@@ -43,12 +43,7 @@ export default function Kulintang() {
 			{TONES.map(({ name, frequency }, i) => (
 				<button
 					ref={(element) => (gongsRef.current[i] = element)}
-					onMouseDown={() => playSound(frequency)}
-					onKeyDown={(event) => {
-						if (event.code === 'Space') {
-							playSound(frequency);
-						}
-					}}
+					onClick={() => playSound(frequency)}
 					key={i}
 				>
 					{name}
