@@ -7,17 +7,16 @@ import './Kulintang.css';
 export default function Kulintang() {
 	const gongsRef = useRef<(HTMLElement | null)[]>([]);
 	const synthRef = useRef<Tone.PolySynth>();
-	const playSoundRef = useRef<(frequency: number) => void>();
+
+	function playSound(frequency: number) {
+		console.log(`playing ${frequency}`);
+
+		synthRef.current?.triggerAttackRelease(frequency, 0.25);
+	}
 
 	useEffect(() => {
+		// TODO adjust ADSR
 		synthRef.current = new Tone.PolySynth().toDestination();
-
-		playSoundRef.current = function (frequency: number) {
-			console.log(`playing ${frequency}`);
-
-			// TODO adjust ADSR
-			synthRef.current?.triggerAttackRelease(frequency, 0.25);
-		};
 
 		return () => {
 			synthRef.current?.dispose();
@@ -29,9 +28,7 @@ export default function Kulintang() {
 		TONES.reduce(
 			(keyMap, { frequency }, i) => ({
 				...keyMap,
-				[i + 1]: () => {
-					playSoundRef.current!(frequency);
-				},
+				[i + 1]: () => playSound(frequency),
 			}),
 			{}
 		)
@@ -41,10 +38,8 @@ export default function Kulintang() {
 		<div className="Kulintang">
 			{TONES.map(({ name, frequency }, i) => (
 				<button
-					ref={(element) => {
-						gongsRef.current[i] = element;
-					}}
-					onMouseDown={() => playSoundRef.current!(frequency)}
+					ref={(element) => (gongsRef.current[i] = element)}
+					onMouseDown={() => playSound(frequency)}
 					key={i}
 				>
 					{name}
