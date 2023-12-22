@@ -9,7 +9,22 @@ export default function Kulintang() {
 	const synthRef = useRef<Tone.PolySynth>();
 
 	function playSound(frequency: number) {
-		synthRef.current?.triggerAttackRelease(frequency, 0.25);
+		synthRef.current?.triggerAttackRelease(frequency, 1 / 8);
+	}
+
+	function animateGong(i: number) {
+		const gongClassList = gongsRef.current[i]?.classList;
+
+		gongClassList?.add('hit');
+
+		setTimeout(() => {
+			gongClassList?.remove('hit');
+		}, 0);
+	}
+
+	function handleHit(frequency: number, i: number) {
+		playSound(frequency);
+		animateGong(i);
 	}
 
 	useEffect(() => {
@@ -32,7 +47,7 @@ export default function Kulintang() {
 		TONES.reduce(
 			(keyMap, { frequency }, i) => ({
 				...keyMap,
-				[i + 1]: () => playSound(frequency),
+				[i + 1]: () => handleHit(frequency, i),
 			}),
 			{}
 		)
@@ -43,7 +58,7 @@ export default function Kulintang() {
 			{TONES.map(({ name, frequency }, i) => (
 				<button
 					ref={(element) => (gongsRef.current[i] = element)}
-					onClick={() => playSound(frequency)}
+					onClick={() => handleHit(frequency, i)}
 					key={i}
 				>
 					{name}

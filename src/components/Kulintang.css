@@ -4,5 +4,14 @@
 	> button {
 		flex: 1;
 		height: 12rem;
+		background-color: initial;
+
+		&.hit {
+			background-color: cyan;
+		}
+
+		&:not(.hit) {
+			transition: background-color 250ms linear;
+		}
 	}
 }
