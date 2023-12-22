@@ -44,6 +44,11 @@ export default function Kulintang() {
 				<button
 					ref={(element) => (gongsRef.current[i] = element)}
 					onMouseDown={() => playSound(frequency)}
+					onKeyDown={(event) => {
+						if (event.code === 'Space') {
+							playSound(frequency);
+						}
+					}}
 					key={i}
 				>
 					{name}
