@@ -9,14 +9,18 @@ export default function Kulintang() {
 	const synthRef = useRef<Tone.PolySynth>();
 
 	function playSound(frequency: number) {
-		console.log(`playing ${frequency}`);
-
 		synthRef.current?.triggerAttackRelease(frequency, 0.25);
 	}
 
 	useEffect(() => {
-		// TODO adjust ADSR
-		synthRef.current = new Tone.PolySynth().toDestination();
+		synthRef.current = new Tone.PolySynth(Tone.Synth, {
+			envelope: {
+				attack: 0.001,
+				decay: 0.05,
+				sustain: 0.1,
+				release: 2,
+			},
+		}).toDestination();
 
 		return () => {
 			synthRef.current?.dispose();
