@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as Tone from 'tone';
+import { useDrag } from '@use-gesture/react';
 import { TONES } from '../utils/notes';
 import useKeyboardBindings from '../hooks/useKeyboardBindings';
 import './Kulintang.css';
@@ -53,12 +54,25 @@ export default function Kulintang() {
 		)
 	);
 
+	const bind = useDrag(
+		({ args: [frequency, gongIndex], tap, touches }) => {
+			if (tap) {
+				handleHit(frequency, gongIndex);
+			}
+
+			if (touches > 1) {
+				// TODO fire multiple `handleHit`s
+			}
+		},
+		{ filterTaps: true }
+	);
+
 	return (
 		<div className="Kulintang">
 			{TONES.map(({ name, frequency }, i) => (
 				<button
 					ref={(element) => (gongsRef.current[i] = element)}
-					onClick={() => handleHit(frequency, i)}
+					{...bind(frequency, i)}
 					key={i}
 				>
 					{name}
